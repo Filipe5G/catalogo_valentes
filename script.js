@@ -226,7 +226,7 @@ document.getElementById('checkout-whatsapp').addEventListener('click', () => {
         });
         
         // Resumo do bloco compactado
-        message += `  *Qtd Total:* ${item.quantity} un. | *Subtotal:* R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
+        message += `  *Qtd Total:* ${item.quantity} un. \n *Subtotal:* R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
         message += "--------------------------------------\n";
     });
 
