@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo & Pedidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Distribuidora Valentes</h1>
+        <p>Faça seu pedido de forma rápida e prática</p>
+        <button id="cart-toggle-btn" class="cart-toggle">
+            🛒 Carrinho (<span id="cart-count">0</span>)
+        </button>
+    </header>
+
+    <main class="container">
+        <div class="filter-container">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="doces">Doces & Torrones</button>
+            <button class="filter-btn" data-category="bebidas">Bebidas</button>
+        </div>
+
+        <section class="products-grid" id="products-grid"></section>
+    </main>
+
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="" class="modal-image">
+                <div class="modal-info">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-price" class="modal-price"></p>
+                    
+                    <div class="options-container">
+                        <h3>Escolha os Sabores:</h3>
+                        <div id="modal-flavors" class="flavors-grid">
+                            </div>
+                    </div>
+
+                    <div class="quantity-container">
+                        <h3>Quantidade:</h3>
+                        <div class="quantity-controls">
+                            <button type="button" id="btn-minus">-</button>
+                            <input type="number" id="prod-quantity" value="1" min="1">
+                            <button type="button" id="btn-plus">+</button>
+                        </div>
+                    </div>
+
+                    <button id="add-to-cart-btn" class="btn-success">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Seu Pedido</h2>
+            <span id="close-cart" class="close-cart">&times;</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="cart-total-value">R$ 0,00</span></div>
+            <button id="checkout-whatsapp" class="btn-whatsapp">Enviar Pedido via WhatsApp</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
