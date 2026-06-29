@@ -41,15 +41,18 @@ const cartSidebar = document.getElementById('cart-sidebar');
 
 // --- 1. RENDERIZAR PRODUTOS NA VITRINE ---
 function displayProducts(productsList) {
-    productsGrid.innerHTML = productsList.map(product => `
-        <article class="product-card" onclick="openModal(${product.id})">
-            <img src="${product.image}" alt="${product.title}" class="product-image">
-            <div class="product-info">
-                <h3 class="product-title">${product.title}</h3>
-                <div class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</div>
-            </div>
-        </article>
-    `).join('');
+    productsGrid.innerHTML = productsList.map(product => {
+        const priceFormatted = product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return `
+            <article class="product-card" onclick="openModal(${product.id})">
+                <img src="${product.image}" alt="${product.title}" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">${product.title}</h3>
+                    <div class="product-price">R$ ${priceFormatted}</div>
+                </div>
+            </article>
+        `;
+    }).join('');
 }
 
 // --- 2. CONTROLE DE FILTROS ---
@@ -72,9 +75,11 @@ function openModal(id) {
     currentProduct = products.find(p => p.id === id);
     if (!currentProduct) return;
 
+    const modalPriceFormatted = currentProduct.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
     document.getElementById('modal-img').src = currentProduct.image;
     document.getElementById('modal-title').innerText = currentProduct.title;
-    document.getElementById('modal-price').innerText = `R$ ${currentProduct.price.toFixed(2).replace('.', ',')}`;
+    document.getElementById('modal-price').innerText = `R$ ${modalPriceFormatted}`;
 
     // Renderiza cada sabor com seu controle individual de quantidade
     const flavorsContainer = document.getElementById('modal-flavors');
@@ -171,6 +176,7 @@ function updateCart() {
         total += itemTotal;
 
         const flavorsText = item.flavors.map(f => `${f.qty}x ${f.name}`).join(', ');
+        const itemTotalFormatted = itemTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         return `
             <div class="cart-item">
@@ -179,13 +185,14 @@ function updateCart() {
                     <strong>Sabores:</strong> ${flavorsText} <br>
                     <strong>Qtd Total:</strong> ${item.quantity} un.
                 </div>
-                <strong>R$ ${itemTotal.toFixed(2).replace('.', ',')}</strong>
+                <strong>R$ ${itemTotalFormatted}</strong>
                 <span class="remove-item" onclick="removeFromCart(${index})">Remover</span>
             </div>
         `;
     }).join('');
 
-    document.getElementById('cart-total-value').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    const totalFormatted = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('cart-total-value').innerText = `R$ ${totalFormatted}`;
 }
 
 function removeFromCart(index) {
@@ -200,7 +207,6 @@ document.getElementById('cart-toggle-btn').addEventListener('click', openCart);
 document.getElementById('close-cart').addEventListener('click', closeCart);
 
 // --- 5. FECHAMENTO DE PEDIDO VIA WHATSAPP ---
-// --- 5. FECHAMENTO DE PEDIDO VIA WHATSAPP (NOVO LAYOUT) ---
 document.getElementById('checkout-whatsapp').addEventListener('click', () => {
     if (cart.length === 0) {
         alert("Seu carrinho está vazio!");
@@ -220,18 +226,24 @@ document.getElementById('checkout-whatsapp').addEventListener('click', () => {
         // Cabeçalho do produto em destaque
         message += `*📦 ${item.title}*\n`;
         
-        // Listagem direta: mais limpa e sem redundâncias
+        // Listagem direta de sabores
         item.flavors.forEach(f => {
-            message += `    ${f.qty}x un. — ${f.name}\n`;
+            message += `  ▪️ ${f.qty}x un. — ${f.name}\n`;
         });
         
+        // Subtotal do item formatado com milhar
+        const itemTotalFormatado = itemTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        
         // Resumo do bloco compactado
-        message += `  *Qtd Total:* ${item.quantity} un. \n *Subtotal:* R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
+        message += `  *Qtd Total:* ${item.quantity} un. | *Subtotal:* R$ ${itemTotalFormatado}\n`;
         message += "--------------------------------------\n";
     });
 
-    // Bloco final de fechamento ajustado com a vírgula correta
-    message += `\n💰 *VALOR TOTAL DO PEDIDO: R$ ${total.toFixed(2).replace('.', ',')}*\n`;
+    // Valor Total formatado corretamente com separador de milhar
+    const totalFormatado = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Bloco final de fechamento
+    message += `\n💰 *VALOR TOTAL DO PEDIDO: R$ ${totalFormatado}*\n`;
     message += "======================================\n\n";
     message += "Aguardando confirmação dos dados para faturamento. Obrigado!";
 
