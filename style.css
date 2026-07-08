@@ -192,7 +192,11 @@ header {
         align-items: center;
         margin: 0 auto;
     }
-    .modal-image { width: auto; height: 320px; margin: 0 auto; }
+    .modal-image {
+        width: auto;
+        height: 320px;
+        margin: 0 auto;
+    }
     .cart-sidebar { width: 100%; right: -100%; }
     .cart-toggle { position: static; margin-top: 15px; display: inline-block; }
 }
