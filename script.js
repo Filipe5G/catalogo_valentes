@@ -5,27 +5,30 @@ const WHATSAPP_NUMBER = "5511912299261";
 const products = [
     {
         id: 1,
-        title: "Torrone Artesanal de Amêndoas",
-        category: "doces",
+        title: "Salgadinho Bacon com Ketchup",
+        description: "Descrição",
+        category: "salgadinho",
         price: 18.90,
-        flavors: ["Tradicional", "Com Chocolate", "Cranberry"],
-        image: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=500"
+        flavors: ["Bacon"],
+        image: "./assets/kigesto-bacon-com-ketchup.png"
     },
     {
         id: 2,
-        title: "Café Gourmet",
-        category: "bebidas",
+        title: "Salgadinho Premium",
+        description: "",
+        category: "salgadinho",
         price: 24.00,
         flavors: ["Preto", "Leite Desnatado", "Intenso", "Suave"],
-        image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500"
+        image: "./assets/salgadinho_kigosto_premium.png"
     },
     {
         id: 3,
-        title: "Chocolate Fino 70% Cacau",
+        title: "Bisconobre",
+        description: "",
         category: "doces",
         price: 14.90,
         flavors: ["Puro", "Com Laranja", "Menta"],
-        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500"
+        image: "./assets/bisconobre.jpg"
     }
 ];
 
@@ -79,6 +82,7 @@ function openModal(id) {
 
     document.getElementById('modal-img').src = currentProduct.image;
     document.getElementById('modal-title').innerText = currentProduct.title;
+    document.getElementById('modal-description').innerText = currentProduct.description;
     document.getElementById('modal-price').innerText = `R$ ${modalPriceFormatted}`;
 
     // Renderiza cada sabor com seu controle individual de quantidade
